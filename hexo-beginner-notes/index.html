@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="hexo,blog,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="有朋友问我如何用hexo建立一个和我这个一样的个人小博客，其实很简单。 首先，你需要在你的本地主机上安装hexo。 这个其实用不着再百度查找各类所谓的教程，因为那些只是他人机器的过程和问题记录，只具有一些参考价值而已。 你只需要打开hexo的官方文档，按照文档的指示一步一步老老实实的做下去即可，非常简单。 但朋友还是懒得看，好吧，我把最简洁的步骤放在这里。">
+<meta name="keywords" content="hexo,blog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用Hexo建立个人博客(新手参考笔记)">
+<meta property="og:url" content="http://infonook.org/hexo-beginner-notes/index.html">
+<meta property="og:site_name" content="INFONOOK">
+<meta property="og:description" content="有朋友问我如何用hexo建立一个和我这个一样的个人小博客，其实很简单。 首先，你需要在你的本地主机上安装hexo。 这个其实用不着再百度查找各类所谓的教程，因为那些只是他人机器的过程和问题记录，只具有一些参考价值而已。 你只需要打开hexo的官方文档，按照文档的指示一步一步老老实实的做下去即可，非常简单。 但朋友还是懒得看，好吧，我把最简洁的步骤放在这里。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-18T23:56:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用Hexo建立个人博客(新手参考笔记)">
+<meta name="twitter:description" content="有朋友问我如何用hexo建立一个和我这个一样的个人小博客，其实很简单。 首先，你需要在你的本地主机上安装hexo。 这个其实用不着再百度查找各类所谓的教程，因为那些只是他人机器的过程和问题记录，只具有一些参考价值而已。 你只需要打开hexo的官方文档，按照文档的指示一步一步老老实实的做下去即可，非常简单。 但朋友还是懒得看，好吧，我把最简洁的步骤放在这里。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://infonook.org/hexo-beginner-notes/">
+
+
+
+
+
+  <title>如何使用Hexo建立个人博客(新手参考笔记) | INFONOOK</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">INFONOOK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">一块普通人的信息格子</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            链接
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://infonook.org/hexo-beginner-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuhuarou">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/alutouxiang150.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="INFONOOK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">如何使用Hexo建立个人博客(新手参考笔记)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-16T20:56:45+08:00">
+                2017-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/program/" itemprop="url" rel="index">
+                    <span itemprop="name">program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/hexo-beginner-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="hexo-beginner-notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>有朋友问我如何用hexo建立一个和我这个一样的个人小博客，其实很简单。</p>
+<p>首先，你需要在你的本地主机上安装hexo。</p>
+<p>这个其实用不着再百度查找各类所谓的教程，因为那些只是他人机器的过程和问题记录，只具有一些参考价值而已。</p>
+<p>你只需要打开hexo的官方文档，按照文档的指示一步一步老老实实的做下去即可，非常简单。</p>
+<p>但朋友还是懒得看，好吧，我把最简洁的步骤放在这里。<br><a id="more"></a></p>
+<h2 id="hexo的安装"><a href="#hexo的安装" class="headerlink" title="hexo的安装"></a>hexo的安装</h2><p>第一步，你想要使用hexo的话，你需要已经安装好node.js和git这两个程序，如果没有，那么按照下面的步骤走一遍。</p>
+<h3 id="安装node-js："><a href="#安装node-js：" class="headerlink" title="安装node.js："></a>安装node.js：</h3><p>linux平台：<br><code>wget -q0- <a href="https://raw.github.com/creationix/nvm/master/install.sh" target="_blank" rel="noopener">https://raw.github.com/creationix/nvm/master/install.sh</a> | sh<br>nvm install stable<br></code><br>win平台：</p>
+<p>请点击<a href="https://nodejs.org/dist/v8.9.4/node-v8.9.4-x64.msi" target="_blank" rel="noopener">此处</a>获取下载链接</p>
+<p>这样就安装好了node.js。</p>
+<h3 id="下面安装git："><a href="#下面安装git：" class="headerlink" title="下面安装git："></a>下面安装git：</h3><p>rh系：<br><code>yum install git</code><br>debian系:<br><code>apt-get install git</code><br>win平台：<br>请点击<a href="https://git-scm.com/download/win" target="_blank" rel="noopener">此处</a>获取下载链接</p>
+<p>下载之后可以进行一些基础设置，比如设定用户名和邮箱，命令为：</p>
+<p><code>git config –global user.name “用户名”</code><br><code>git config –global user.email “邮箱”</code></p>
+<p>当然，设定用户名这一步可以不做。</p>
+<p>如此，我们就好了准备工作。可以进行安装hexo了。</p>
+<h3 id="安装hexo："><a href="#安装hexo：" class="headerlink" title="安装hexo："></a>安装hexo：</h3><p>linux下，直接敲入：<br><code>npm install -g hexo-cli</code><br>即可。</p>
+<p>win平台比较好的安装方法是点击开始按钮，输入”git bash”查找到git bash，运行它，敲入这行命令即可。</p>
+<h2 id="hexo的使用"><a href="#hexo的使用" class="headerlink" title="hexo的使用"></a>hexo的使用</h2><h3 id="hexo的使用-init"><a href="#hexo的使用-init" class="headerlink" title="hexo的使用-init"></a>hexo的使用-init</h3><p>现在我们就可以用hexo来建立我们的博客了。</p>
+<p>执行<br><code>hexo init 你想放博客的文件夹名字(本来是没有这个文件路径的，是由hexo新建)</code><br>这样就完成了，就是这样的简单。</p>
+<p>然后你就需要切换到博客文件路径下进行各种操作了。</p>
+<p>首先打开_config.yml这个文件，在这个文件中，你首先要更改一下博客的基本信息，让它真正变成你的记事本。<br><code># Site<br>title: 你的博客标题<br>subtitle: 你的博客副标题<br>description: 关键字<br>author: 作者名字<br>language: 语言区域<br>timezone: 时间区域<br># URL<br>## If your site is put in a subdirectory, set url as ‘<a href="http://yoursite.com/child&#39;" target="_blank" rel="noopener">http://yoursite.com/child&#39;</a> and root as ‘/child/‘<br>url: 你的域名<br>root: 你的博客根路径<br>permalink: 固定链接的自定义显示要素<br></code><br>改好这些信息之后就基本可以了。</p>
+<h3 id="hexo的使用-文章的书写和发布"><a href="#hexo的使用-文章的书写和发布" class="headerlink" title="hexo的使用-文章的书写和发布"></a>hexo的使用-文章的书写和发布</h3><p>那么我们现在就来使用hexo来写一篇文章，并且把我们的小博客在本地运行起来看看效果。</p>
+<p>请先处于你的博客根目录，然后执行<br><code>hexo new 你的文章名</code><br>这样，我们就创建好了文章的md(markdown)文件了。</p>
+<p>这个文件位于source/_post路径下，你可以用你喜欢的markdown编辑器来填写这个文件的内容。</p>
+<p>写好之后保存。</p>
+<p>那么现在我们需要把它生成静态文件。</p>
+<p>切回根目录，执行<br><code>hexo g</code><br>就可以了。这个命令是hexo generate的简化。</p>
+<p>然后我们本地运行以下看看效果。</p>
+<p>根目录，执行<br><code>hexo s –debug</code><br>打开你的浏览器，在地址栏键入localhost:4000即可访问了。这里加上debug参数是为了本地调试。</p>
+<h3 id="hexo的使用-github"><a href="#hexo的使用-github" class="headerlink" title="hexo的使用-github"></a>hexo的使用-github</h3><p>我知道很多人都喜欢在github分享自己的笔记，那么这里就介绍如何把本地的项目和github”连接”在一起。</p>
+<p>当然，你需要拥有一个github帐号，并且新建一个github page的项目。</p>
+<p>注意，这个项目的命名是有严格的规范的，必须是 你的用户名.github.io 才行。</p>
+<p>创建好这个项目之后，我们就可以进行”连接”了。</p>
+<p>首先，你需要切到博客根目录，安装hexo-deployer-git。</p>
+<p>执行<br><code>npm install hexo-deployer-git –save</code><br>这样，就装好了。</p>
+<p>之后，打开_config.yml文件。<br><code># Deployment<br>## Docs: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">https://hexo.io/docs/deployment.html</a><br>deploy:<br>type: git<br>repo: <a href="https://github.com/你的用户名/你的用户名.github.io.git" target="_blank" rel="noopener">https://github.com/你的用户名/你的用户名.github.io.git</a><br>branch: master<br></code><br>按照如上配置填写好自己的github配置(这里用https而不是ssh是主要考虑普通用户的操作难度，用https会有一个输入用户名和密码的过程，比较简单直观。当然了，用ssh很省事，但如果你已经会用ssh协议了，那我觉得也用不着这篇博文了，是吧 :) )。</p>
+<p>配置好了之后，只需要在根目录执行<br><code>hexo deploy</code><br>就可以了。</p>
+<h3 id="hexo的使用-更新的简单步骤"><a href="#hexo的使用-更新的简单步骤" class="headerlink" title="hexo的使用-更新的简单步骤"></a>hexo的使用-更新的简单步骤</h3><p>1.新建<br><code>hexo new 文件名</code><br>2.编辑刚才新建好的博文md文件<br>3.生成静态文件<br><code>hexo g</code><br>4.本地测试(括号内为可选参数)<br><code>hexo s (–debug)</code><br>5.同步github<br><code>hexo deploy</code></p>
+<h3 id="hexo的使用-主题"><a href="#hexo的使用-主题" class="headerlink" title="hexo的使用-主题"></a>hexo的使用-主题</h3><p>更改主题很简单，下载好主题放入theme路径下。</p>
+<p>然后打开_config.yml文件，找到<br><code># Extensions<br>## Plugins: <a href="https://hexo.io/plugins/" target="_blank" rel="noopener">https://hexo.io/plugins/</a><br>## Themes: <a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a><br>theme: 主题名字<br></code><br>修改好之后就可以了，plugins也是同理，文档注释也写的很清楚了。</p>
+<h3 id="hexo的使用-个人域名"><a href="#hexo的使用-个人域名" class="headerlink" title="hexo的使用-个人域名"></a>hexo的使用-个人域名</h3><p>如果你的域名并不想使用 你的用户名.github.io ，那么需要你在source路径下新建一个CNAME文件。</p>
+<p>注意，没有后缀，这个文件就叫CNAME。</p>
+<p>然后用文本编辑器打开，填写你的个人域名，保存。</p>
+<p>之后还需要设置好自己的域名解析，即可使用自己的域名作为博客域名了。</p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>如果对本文有任何问题请联系我。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    wuhuarou
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://infonook.org/hexo-beginner-notes/" title="如何使用Hexo建立个人博客(新手参考笔记)">http://infonook.org/hexo-beginner-notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
+          
+            <a href="/tags/blog/" rel="tag"># blog</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-useful-bits-and-pieces-01/" rel="next" title="Linux零碎经验整理">
+                <i class="fa fa-chevron-left"></i> Linux零碎经验整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/centos-dnf-install/" rel="prev" title="CentOS 7 配置 dnf 及其插件">
+                CentOS 7 配置 dnf 及其插件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/alutouxiang150.png" alt="wuhuarou">
+          <p class="site-author-name" itemprop="name">wuhuarou</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo的安装"><span class="nav-number">1.</span> <span class="nav-text">hexo的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装node-js："><span class="nav-number">1.1.</span> <span class="nav-text">安装node.js：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下面安装git："><span class="nav-number">1.2.</span> <span class="nav-text">下面安装git：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装hexo："><span class="nav-number">1.3.</span> <span class="nav-text">安装hexo：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo的使用"><span class="nav-number">2.</span> <span class="nav-text">hexo的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo的使用-init"><span class="nav-number">2.1.</span> <span class="nav-text">hexo的使用-init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo的使用-文章的书写和发布"><span class="nav-number">2.2.</span> <span class="nav-text">hexo的使用-文章的书写和发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo的使用-github"><span class="nav-number">2.3.</span> <span class="nav-text">hexo的使用-github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo的使用-更新的简单步骤"><span class="nav-number">2.4.</span> <span class="nav-text">hexo的使用-更新的简单步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo的使用-主题"><span class="nav-number">2.5.</span> <span class="nav-text">hexo的使用-主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo的使用-个人域名"><span class="nav-number">2.6.</span> <span class="nav-text">hexo的使用-个人域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后"><span class="nav-number">2.7.</span> <span class="nav-text">最后</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wuhuarou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://wuhuarou.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://infonook.org/hexo-beginner-notes/';
+          this.page.identifier = 'hexo-beginner-notes/';
+          this.page.title = '如何使用Hexo建立个人博客(新手参考笔记)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wuhuarou.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="linux,centos,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="CentOS的获取CentOS为Red Hat Enterprise Linux依照开放源代码规定释出的源代码所编译后可免费使用的社区开源发行版本。 本文撰写时的系统最新版本为CentOS 7.6(1810)版本。">
+<meta name="keywords" content="linux,centos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS的获取及安装(实机)">
+<meta property="og:url" content="http://infonook.org/centos-part1/index.html">
+<meta property="og:site_name" content="INFONOOK">
+<meta property="og:description" content="CentOS的获取CentOS为Red Hat Enterprise Linux依照开放源代码规定释出的源代码所编译后可免费使用的社区开源发行版本。 本文撰写时的系统最新版本为CentOS 7.6(1810)版本。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-17T23:52:43.784Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS的获取及安装(实机)">
+<meta name="twitter:description" content="CentOS的获取CentOS为Red Hat Enterprise Linux依照开放源代码规定释出的源代码所编译后可免费使用的社区开源发行版本。 本文撰写时的系统最新版本为CentOS 7.6(1810)版本。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://infonook.org/centos-part1/">
+
+
+
+
+
+  <title>CentOS的获取及安装(实机) | INFONOOK</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">INFONOOK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">一块普通人的信息格子</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            链接
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://infonook.org/centos-part1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuhuarou">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/alutouxiang150.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="INFONOOK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">CentOS的获取及安装(实机)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-18T07:08:50+08:00">
+                2019-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/centos-part1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="centos-part1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="CentOS的获取"><a href="#CentOS的获取" class="headerlink" title="CentOS的获取"></a>CentOS的获取</h1><p>CentOS为Red Hat Enterprise Linux依照开放源代码规定释出的源代码所编译后可免费使用的社区开源发行版本。</p>
+<p>本文撰写时的系统最新版本为CentOS 7.6(1810)版本。<br><a id="more"></a></p>
+<p>CentOS的官方网站为：<a href="https://www.centos.org/" target="_blank" rel="noopener">https://www.centos.org/</a></p>
+<p>进入网站后，在首页点击Get CentOS Now按钮即可跳转至下载页面。</p>
+<p>推荐使用DVD ISO进行安装。Live版本容易出现引导问题，而Everything版本是为纯离线情况下方便安装使用，我们并不需要。</p>
+<p>点击DVD ISO按钮之后，你会跳转至镜像列表页面，选择合适镜像点进行下载即可(一般来说就近即可)。</p>
+<p>也可访问WIKI站点的下载词条(<a href="https://wiki.centos.org/zh/Download)，在这里更为方便和直观的选择版本进行下载。" target="_blank" rel="noopener">https://wiki.centos.org/zh/Download)，在这里更为方便和直观的选择版本进行下载。</a></p>
+<h1 id="CentOS的安装"><a href="#CentOS的安装" class="headerlink" title="CentOS的安装"></a>CentOS的安装</h1><h2 id="安装前的准备"><a href="#安装前的准备" class="headerlink" title="安装前的准备"></a>安装前的准备</h2><h3 id="制作U盘安装镜像"><a href="#制作U盘安装镜像" class="headerlink" title="制作U盘安装镜像"></a>制作U盘安装镜像</h3><p>下载好镜像文件且验证无误后，我们就需要制作一个USB安装设备以便进行安装。</p>
+<p>在Windows环境下，你需要准备一个容量在6GB以上的U盘，还需要下载镜像工具来进行镜像制作。</p>
+<p>个人推荐的镜像制作工具为rufus(<a href="https://rufus.ie/)，下载之后双击运行，选择好U盘和镜像，点击开始即可傻瓜式制作。" target="_blank" rel="noopener">https://rufus.ie/)，下载之后双击运行，选择好U盘和镜像，点击开始即可傻瓜式制作。</a></p>
+<p>在USB安装镜像制作过程中，弹出任何询问窗体，请选择标注为推荐的选项。</p>
+<p>在Linux环境下…你都在用Linux了肯定也不需要本文多赘述了。</p>
+<h3 id="在安装前的硬件准备"><a href="#在安装前的硬件准备" class="headerlink" title="在安装前的硬件准备"></a>在安装前的硬件准备</h3><p>注意：非常不推荐新手/无经验者使用双/多系统环境。</p>
+<p>如果条件允许，请安装至新设备。如果不允许，请准备一块无用的硬盘(如果你都会在同一硬盘上进行分区管理，那么也不需要看这种安装指导了)。</p>
+<p>首先，先在官方/网络上查找你机器进入BIOS的方法及BIOS设置详情(至少要知道如何设置设备启动顺序和如何保存设置)。</p>
+<p>查询到结果后请认真记录此结果在其它设备/笔记本(纸)上。</p>
+<h3 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h3><p>然后关闭你的机器，插入你的U盘，开机进入BIOS，更改启动顺序以让U盘进行优先启动。</p>
+<p>进入安装界面后，它会先行问你语言选择，选择中文(会导致HOME路径下文件夹中文化，虽然很蛋疼，但是我还是推荐新手选择中文。顺带一提这些在之后熟悉了都可以再行更改的)即可。</p>
+<p>之后就是阅读理解了，按照指导一步步选择即可。</p>
+<p>当到达选择系统安装位置的时候，请注意：</p>
+<p>一定要选择我要自行分配(大概这个意思，我没在中文UI上装过不好意思…)，然后点击上方的完成(我的是Done)按钮之后，你会进入对磁盘的自定义界面。</p>
+<p>正常来说，如果是新硬盘/新设备，那么这里应该什么都没有，直接点击自动分配即可。</p>
+<p>如果有，那么你这块无用的硬盘应该是以前安装过其它系统，选中它，点击减号，会弹出提示窗口，在窗口中选择删除所有相关文件即可进行清空。然后再进行自动分配即可。</p>
+<p>注意：推荐选择LVM模式。</p>
+<p>之后点击开始安装即可。</p>
+<p>在安装过程中，应该会有让你设置root账户密码和新账户的选项，请认真填写并记好填写内容。</p>
+<p>新账户请勾选管理员身份。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    wuhuarou
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://infonook.org/centos-part1/" title="CentOS的获取及安装(实机)">http://infonook.org/centos-part1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/centos/" rel="tag"># centos</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/some-useful-things-for-gnome/" rel="next" title="GNOME桌面环境下一些有用的小东西">
+                <i class="fa fa-chevron-left"></i> GNOME桌面环境下一些有用的小东西
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/alutouxiang150.png" alt="wuhuarou">
+          <p class="site-author-name" itemprop="name">wuhuarou</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CentOS的获取"><span class="nav-number">1.</span> <span class="nav-text">CentOS的获取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CentOS的安装"><span class="nav-number">2.</span> <span class="nav-text">CentOS的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装前的准备"><span class="nav-number">2.1.</span> <span class="nav-text">安装前的准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#制作U盘安装镜像"><span class="nav-number">2.1.1.</span> <span class="nav-text">制作U盘安装镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在安装前的硬件准备"><span class="nav-number">2.1.2.</span> <span class="nav-text">在安装前的硬件准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始安装"><span class="nav-number">2.1.3.</span> <span class="nav-text">开始安装</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wuhuarou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://wuhuarou.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://infonook.org/centos-part1/';
+          this.page.identifier = 'centos-part1/';
+          this.page.title = 'CentOS的获取及安装(实机)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wuhuarou.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

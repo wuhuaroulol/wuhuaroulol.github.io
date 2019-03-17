@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="linux,centos,skylake,intel,nvidia,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="之前，我有比较草率的写了一篇intel核心(6代以后)加nvidia显卡笔记本的x界面启动失败解决方法，但就如我刚才所言，还是比较草率的。 我最近琢磨了很久，也做了各种实验，有一个我自己比较清晰的认知就是在rh系的centos这个发行版下，民用显卡的驱动，用闭源的反倒没有开源的好。而相对与只处理文本的linux普通用户而言，双显卡笔记本直接使用核心显卡更为方便一些，也免去了繁杂的配置和每次内核更新">
+<meta name="keywords" content="linux,centos,skylake,intel,nvidia">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS 7.3(1611)对于intel核心(6代以后)+Nvidia显卡笔记本的x界面定稿">
+<meta property="og:url" content="http://infonook.org/centos1611-intel-skylake-nvidia/index.html">
+<meta property="og:site_name" content="INFONOOK">
+<meta property="og:description" content="之前，我有比较草率的写了一篇intel核心(6代以后)加nvidia显卡笔记本的x界面启动失败解决方法，但就如我刚才所言，还是比较草率的。 我最近琢磨了很久，也做了各种实验，有一个我自己比较清晰的认知就是在rh系的centos这个发行版下，民用显卡的驱动，用闭源的反倒没有开源的好。而相对与只处理文本的linux普通用户而言，双显卡笔记本直接使用核心显卡更为方便一些，也免去了繁杂的配置和每次内核更新">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-18T23:56:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS 7.3(1611)对于intel核心(6代以后)+Nvidia显卡笔记本的x界面定稿">
+<meta name="twitter:description" content="之前，我有比较草率的写了一篇intel核心(6代以后)加nvidia显卡笔记本的x界面启动失败解决方法，但就如我刚才所言，还是比较草率的。 我最近琢磨了很久，也做了各种实验，有一个我自己比较清晰的认知就是在rh系的centos这个发行版下，民用显卡的驱动，用闭源的反倒没有开源的好。而相对与只处理文本的linux普通用户而言，双显卡笔记本直接使用核心显卡更为方便一些，也免去了繁杂的配置和每次内核更新">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://infonook.org/centos1611-intel-skylake-nvidia/">
+
+
+
+
+
+  <title>CentOS 7.3(1611)对于intel核心(6代以后)+Nvidia显卡笔记本的x界面定稿 | INFONOOK</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">INFONOOK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">一块普通人的信息格子</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            链接
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://infonook.org/centos1611-intel-skylake-nvidia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuhuarou">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/alutouxiang150.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="INFONOOK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">CentOS 7.3(1611)对于intel核心(6代以后)+Nvidia显卡笔记本的x界面定稿</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-15T20:56:45+08:00">
+                2017-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/centos1611-intel-skylake-nvidia/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="centos1611-intel-skylake-nvidia/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前，我有比较草率的写了一篇intel核心(6代以后)加nvidia显卡笔记本的x界面启动失败解决方法，但就如我刚才所言，还是比较草率的。</p>
+<p>我最近琢磨了很久，也做了各种实验，有一个我自己比较清晰的认知就是在rh系的centos这个发行版下，民用显卡的驱动，用闭源的反倒没有开源的好。而相对与只处理文本的linux普通用户而言，双显卡笔记本直接使用核心显卡更为方便一些，也免去了繁杂的配置和每次内核更新后的重新调配。<br><a id="more"></a><br>首先是常规使用方面，如果使用闭源驱动，你会发现chrome浏览器的书签栏会偶尔鬼畜闪烁(此处为错误结论，chrome鬼畜并非驱动问题，而是chrome程序本身问题)，而且当播放媒体的时候，也会有神奇的问题出现(此处不指鬼畜，是指花屏和无法播放等播放异常)。</p>
+<p>再有就是闭源驱动无论从安装、更新还是维护上来说，都对使用者要求较高，至少需要熟练掌握各类参数配置、简单的基础切换及内核更新后的重新配置。</p>
+<p>最后就是闭源驱动和开源驱动在民用显卡的常规使用上来说，其实没有什么性能提升。不过对于绘制图表 or 各类制图的专业显卡来说，闭源驱动会是你最佳选择，至少在3d方面是比开源驱动强很多的。</p>
+<p>那么问题就来了，centos 7 1611的内核版本是3(我个人并不建议你去升级内核版本，一个正式发行版的推出是已经经过比较合理的测试的，所以选用的内核也是有一定的理由的)，而且本版本集成的开源nouveau驱动并不能正确启动x界面，甚至在系统安装时候也是如此。</p>
+<p>解决办法同样很简单，也是在内核启动参数中加入一条配置即可，就是 nouveau.modeset=0 。</p>
+<p>这样你就可以正常启动你的x界面使用了。</p>
+<p>我比较推荐在当前使用的内核版本启动参数中添加此数值，而备用内核版本还是保持原样。</p>
+<p>这样的做法比之前的做法好要很多，具体原因解释起来比较复杂，所以这里就不多赘述了。</p>
+<p>至于笔者为何选用centos这个发行版，原因其实很简单，一个是因为很少有更新，比较稳当，不用担心更新之后出现的各种问题；另一个是我对图形的需求真的非常非常小，我用linux基本只是做常规开发和处理文档，所以rh系的centos反倒是我的个人桌面最佳选择。</p>
+<p>如果是您也想使用linux作为个人综合桌面使用，那么rh系我比较推荐fedora这个发行版，debian系我比较推荐选择ubuntu这个发行版。</p>
+<p>综合来说，我个人更为推荐ubuntu这个发行版作为您的个人综合桌面，不仅各类驱动安装方便，而且很多图形软件都有现成的包给你“一键安装”，非常的便捷和安全。举个例子比如如果你想用steam，那么只需要去steam官方下载deb包即可，然后就可以在linux下使用steam和好友进行互动，甚至可以玩一些已经进行平台移植的游戏，也是比较不错的。</p>
+<p>这里最后多唠叨一句。</p>
+<p>其实这个世界很多事都是这样，没有什么绝对的好与坏，明确自己的需求、找到自己的点才是最合适的。我个人很无奈那些天天吵来吵去的人们，比如linux，每个发行版都有自己的特点，既然其生存下来了，那就证明必然有它的需求市场，有啥可纠结的。而且现在linux真的不是什么装逼利器、高端必备，你让那些个人桌面发行版的开发人员情何以堪，人家做的就是“便民”集成……</p>
+<p>最后，若想更好的发挥民用显卡的图形性能，请选择windows 10作为您的个人操作系统。</p>
+<p>===================================================================</p>
+<p>2017/10/11 更新：</p>
+<p>笔者因为个人原因必须使用独显，所以还是再啃了很多国外资料之后正确的装好了驱动。</p>
+<p>但想来这种解决办法并不适合大部分人，所以这篇文章的思路还是比较适合普通用户的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    wuhuarou
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://infonook.org/centos1611-intel-skylake-nvidia/" title="CentOS 7.3(1611)对于intel核心(6代以后)+Nvidia显卡笔记本的x界面定稿">http://infonook.org/centos1611-intel-skylake-nvidia/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/centos/" rel="tag"># centos</a>
+          
+            <a href="/tags/skylake/" rel="tag"># skylake</a>
+          
+            <a href="/tags/intel/" rel="tag"># intel</a>
+          
+            <a href="/tags/nvidia/" rel="tag"># nvidia</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-intel-skylake-nvidia/" rel="next" title="linux对intel skylake+nvidia笔记本的硬件支持个人笔记">
+                <i class="fa fa-chevron-left"></i> linux对intel skylake+nvidia笔记本的硬件支持个人笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-useful-bits-and-pieces-01/" rel="prev" title="Linux零碎经验整理">
+                Linux零碎经验整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/alutouxiang150.png" alt="wuhuarou">
+          <p class="site-author-name" itemprop="name">wuhuarou</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wuhuarou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://wuhuarou.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://infonook.org/centos1611-intel-skylake-nvidia/';
+          this.page.identifier = 'centos1611-intel-skylake-nvidia/';
+          this.page.title = 'CentOS 7.3(1611)对于intel核心(6代以后)+Nvidia显卡笔记本的x界面定稿';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wuhuarou.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

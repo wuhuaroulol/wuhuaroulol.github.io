@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="linux,centos,hardware,driver,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="标题名字有点长，因为我并不想把分两篇文章来讲这个事。 想写这样一篇博文，主要是因为中文环境中关于这个问题的资料实在太少，而且很多的文章有过多的坑，让我的几个朋友苦不堪言，于是应邀在我的博客挂一篇指南。 关于笔者环境之前文章已有说明，不再赘述。 那么我们就直奔主题了。">
+<meta name="keywords" content="linux,centos,hardware,driver">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS 7(1708) Intel+Nvidia双显卡笔记本安装Nvidia驱动并用Bumblebee控制独显">
+<meta property="og:url" content="http://infonook.org/centos-bumblebee-nvidia/index.html">
+<meta property="og:site_name" content="INFONOOK">
+<meta property="og:description" content="标题名字有点长，因为我并不想把分两篇文章来讲这个事。 想写这样一篇博文，主要是因为中文环境中关于这个问题的资料实在太少，而且很多的文章有过多的坑，让我的几个朋友苦不堪言，于是应邀在我的博客挂一篇指南。 关于笔者环境之前文章已有说明，不再赘述。 那么我们就直奔主题了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-18T23:56:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS 7(1708) Intel+Nvidia双显卡笔记本安装Nvidia驱动并用Bumblebee控制独显">
+<meta name="twitter:description" content="标题名字有点长，因为我并不想把分两篇文章来讲这个事。 想写这样一篇博文，主要是因为中文环境中关于这个问题的资料实在太少，而且很多的文章有过多的坑，让我的几个朋友苦不堪言，于是应邀在我的博客挂一篇指南。 关于笔者环境之前文章已有说明，不再赘述。 那么我们就直奔主题了。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://infonook.org/centos-bumblebee-nvidia/">
+
+
+
+
+
+  <title>CentOS 7(1708) Intel+Nvidia双显卡笔记本安装Nvidia驱动并用Bumblebee控制独显 | INFONOOK</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">INFONOOK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">一块普通人的信息格子</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            链接
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://infonook.org/centos-bumblebee-nvidia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuhuarou">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/alutouxiang150.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="INFONOOK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">CentOS 7(1708) Intel+Nvidia双显卡笔记本安装Nvidia驱动并用Bumblebee控制独显</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T06:34:34+08:00">
+                2018-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/centos-bumblebee-nvidia/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="centos-bumblebee-nvidia/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>标题名字有点长，因为我并不想把分两篇文章来讲这个事。</p>
+<p>想写这样一篇博文，主要是因为中文环境中关于这个问题的资料实在太少，而且很多的文章有过多的坑，让我的几个朋友苦不堪言，于是应邀在我的博客挂一篇指南。</p>
+<p>关于笔者环境之前文章已有说明，不再赘述。</p>
+<p>那么我们就直奔主题了。<br><a id="more"></a><br><strong>警告：确定继续阅读前，请保证自己有良好的英文阅读能力及linux使用经验(本篇为rh系指南，但也可作为其它系参考)，并且拥有良好的耐心和学习态度，比较整块的时间进行实践。</strong></p>
+<h2 id="关于驱动的一些概要说明"><a href="#关于驱动的一些概要说明" class="headerlink" title="关于驱动的一些概要说明"></a>关于驱动的一些概要说明</h2><p>首先，在linux环境下，显卡的驱动是有几种选择的。</p>
+<p>但就如之前文章所述，如果是普通用户，那么就不要自己碰这方面了，安安稳稳的使用发行版集成的开源驱动即可。</p>
+<p>如果确定需要自行安装nvidia独立显卡驱动，那么我也并不推荐去nvidia官方进行下载安装，因为这种安装方式会有一个问题，就是维护比较麻烦。举个例子就是可能你系统升级一次之后，你就需要重新安装，非常麻烦。</p>
+<p>对于centos，我推荐的方式是通过ELrepo源进行安装。</p>
+<h2 id="Nvidia驱动的安装"><a href="#Nvidia驱动的安装" class="headerlink" title="Nvidia驱动的安装"></a>Nvidia驱动的安装</h2><h3 id="添加ELRepo源"><a href="#添加ELRepo源" class="headerlink" title="添加ELRepo源"></a>添加ELRepo源</h3><p>这个步骤非常简单，复制下面的链接，粘贴到浏览器地址栏打开：</p>
+<p><code><a href="http://elrepo.org/tiki/tiki-index.php" target="_blank" rel="noopener">http://elrepo.org/tiki/tiki-index.php</a></code></p>
+<p>然后按照页面中所写的步骤进行操作即可。</p>
+<h3 id="安装nvidia-detect"><a href="#安装nvidia-detect" class="headerlink" title="安装nvidia-detect"></a>安装nvidia-detect</h3><p>这是一个用来检测并确认自己设备显卡的信息及其所适合的驱动版本的程序。</p>
+<p>打开终端，执行：</p>
+<p><code>sudo yum install nvidia-detect</code></p>
+<p>即可。</p>
+<h3 id="检测型号"><a href="#检测型号" class="headerlink" title="检测型号"></a>检测型号</h3><p>打开终端，执行：</p>
+<p><code>nvidia-detect -v</code></p>
+<p>即可。</p>
+<h3 id="更新内核及内核开发文件"><a href="#更新内核及内核开发文件" class="headerlink" title="更新内核及内核开发文件"></a>更新内核及内核开发文件</h3><p>打开终端，执行：</p>
+<p><code>sudo yum update kernel kernel-devel</code></p>
+<p>即可。</p>
+<h3 id="确认当前是否为nouveau驱动"><a href="#确认当前是否为nouveau驱动" class="headerlink" title="确认当前是否为nouveau驱动"></a>确认当前是否为nouveau驱动</h3><p>打开终端，执行：</p>
+<p><code>lsmod|grep nouveau</code></p>
+<p>如果有输出相关信息，那么就是了。</p>
+<h3 id="禁用nouveau驱动"><a href="#禁用nouveau驱动" class="headerlink" title="禁用nouveau驱动"></a>禁用nouveau驱动</h3><p>我们想要顺利安装nvidia驱动，那么必须先禁用nouveau驱动，还需要把它踢进黑名单中。</p>
+<p>用文本编辑器打开 /lib/modprobe.d/dist-blacklist.conf 这个文件，在其中加入nouveau：</p>
+<p><code>blacklist nouveau options nouveau modeset=0</code></p>
+<h3 id="更改并重新生成grub2"><a href="#更改并重新生成grub2" class="headerlink" title="更改并重新生成grub2"></a>更改并重新生成grub2</h3><p>用文本编辑器打开 /etc/default/grub 文件，在其中的：</p>
+<p><code>GRUB_CMDLINE_LINUX=”rd.lvm.lv=vg_centos/lv_root rd.lvm.lv=vg_centos/lv_swap rhgb quiet”</code></p>
+<p>quiet后面加入rdblacklist=nouveau ，保存。</p>
+<p>打开终端，执行：</p>
+<p><code>sudo grub2-mkconfig -o /boot/grub2/grub.cfg</code></p>
+<p>重新生成即可。</p>
+<h3 id="重建initramfs-image"><a href="#重建initramfs-image" class="headerlink" title="重建initramfs image"></a>重建initramfs image</h3><p>我们首先把现有的移动到其它路径下以作为留手备份：</p>
+<p>打开终端执行：</p>
+<p><code>sudo mv /boot/initramfs-$(uname -r).img /你喜欢的路径</code></p>
+<p>然后重建它，执行：</p>
+<p><code>sudo dracut /boot/initramfs-$(uname -r).img $(uname -r)</code></p>
+<p>即可。</p>
+<h3 id="设置启动方式为文本模式"><a href="#设置启动方式为文本模式" class="headerlink" title="设置启动方式为文本模式"></a>设置启动方式为文本模式</h3><p>因为我们需要执行显卡驱动的安装，所以不能进入图形界面。</p>
+<p>打开终端，执行：</p>
+<p><code>systemctl set-default multi-user.target</code></p>
+<p>然后reboot就行了。</p>
+<h3 id="查看nouveau是否被禁用"><a href="#查看nouveau是否被禁用" class="headerlink" title="查看nouveau是否被禁用"></a>查看nouveau是否被禁用</h3><p>重启后会直接进入文本模式，需要用用户名和密码登陆一下终端。</p>
+<p>然后执行：</p>
+<p><code>lsmod|grep nouveau</code></p>
+<p>如果没有输出，那么就证明已经禁用了。</p>
+<h3 id="安装nvidia驱动"><a href="#安装nvidia驱动" class="headerlink" title="安装nvidia驱动"></a>安装nvidia驱动</h3><p>如果是比较新的显卡，比如9xx，那么直接执行：</p>
+<p><code>sudo yum install kmod-nvidia</code></p>
+<p>即可。</p>
+<p>如果不是比较新的，那么需要按照nnvidia-detect -v 命令所输出的版本进行安装。</p>
+<p>到此，nvidia显卡驱动安装结束。</p>
+<h2 id="Bumblebee的安装及配置"><a href="#Bumblebee的安装及配置" class="headerlink" title="Bumblebee的安装及配置"></a>Bumblebee的安装及配置</h2><p><strong>首先，你应该知晓这是一个什么东西，做什么用的，为什么选用它。</strong></p>
+<p>你首先需要去archlinux的wiki中了解以下bumblebee的相关知识，下面是链接：</p>
+<p><code><a href="https://wiki.archlinux.org/index.php/bumblebee" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/bumblebee</a></code></p>
+<h3 id="Bumblebee的安装"><a href="#Bumblebee的安装" class="headerlink" title="Bumblebee的安装"></a>Bumblebee的安装</h3><p>终端中执行：</p>
+<p><code>sudo yum install bumblebee</code></p>
+<p>即可。</p>
+<h3 id="添加用户到Bumblebee的组"><a href="#添加用户到Bumblebee的组" class="headerlink" title="添加用户到Bumblebee的组"></a>添加用户到Bumblebee的组</h3><p>这一步可能并不是必要的，但如果安装后/重启后发现并没有自动把用户加入Bumblebee组中，那么需要执行：</p>
+<p><code>usermod -a uname -G bumblebee</code></p>
+<p>这样就添加完成了。</p>
+<h3 id="配置Bumblebee-及-将控制面板加入用户菜单"><a href="#配置Bumblebee-及-将控制面板加入用户菜单" class="headerlink" title="配置Bumblebee 及 将控制面板加入用户菜单"></a>配置Bumblebee 及 将控制面板加入用户菜单</h3><p><strong>不要盲目复制任何网络上的配置文件，请认真阅读注释及根据自身情况进行配置文档书写。</strong></p>
+<p>配置文档的配置，你可以根据：<code><a href="http://elrepo.org/tiki/bumblebee" target="_blank" rel="noopener">http://elrepo.org/tiki/bumblebee</a></code> 此处的配置进行参考配置。</p>
+<h3 id="切回图形模式默认启动"><a href="#切回图形模式默认启动" class="headerlink" title="切回图形模式默认启动"></a>切回图形模式默认启动</h3><p>终端执行：</p>
+<p><code>systemctl set-default graphical.target</code></p>
+<p>重启即可。</p>
+<p>至此，所有步骤完成，已可正常使用。</p>
+<p><strong>注：对于所有命令中不理解的地方请自行查阅资料，本文是以长期使用linux作为工作环境的使用者角度书写，很多基础知识不予赘述。</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    wuhuarou
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://infonook.org/centos-bumblebee-nvidia/" title="CentOS 7(1708) Intel+Nvidia双显卡笔记本安装Nvidia驱动并用Bumblebee控制独显">http://infonook.org/centos-bumblebee-nvidia/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/centos/" rel="tag"># centos</a>
+          
+            <a href="/tags/hardware/" rel="tag"># hardware</a>
+          
+            <a href="/tags/driver/" rel="tag"># driver</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/centos-dnf-install/" rel="next" title="CentOS 7 配置 dnf 及其插件">
+                <i class="fa fa-chevron-left"></i> CentOS 7 配置 dnf 及其插件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/some-useful-things-for-gnome/" rel="prev" title="GNOME桌面环境下一些有用的小东西">
+                GNOME桌面环境下一些有用的小东西 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/alutouxiang150.png" alt="wuhuarou">
+          <p class="site-author-name" itemprop="name">wuhuarou</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于驱动的一些概要说明"><span class="nav-number">1.</span> <span class="nav-text">关于驱动的一些概要说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nvidia驱动的安装"><span class="nav-number">2.</span> <span class="nav-text">Nvidia驱动的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加ELRepo源"><span class="nav-number">2.1.</span> <span class="nav-text">添加ELRepo源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装nvidia-detect"><span class="nav-number">2.2.</span> <span class="nav-text">安装nvidia-detect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检测型号"><span class="nav-number">2.3.</span> <span class="nav-text">检测型号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新内核及内核开发文件"><span class="nav-number">2.4.</span> <span class="nav-text">更新内核及内核开发文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确认当前是否为nouveau驱动"><span class="nav-number">2.5.</span> <span class="nav-text">确认当前是否为nouveau驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#禁用nouveau驱动"><span class="nav-number">2.6.</span> <span class="nav-text">禁用nouveau驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改并重新生成grub2"><span class="nav-number">2.7.</span> <span class="nav-text">更改并重新生成grub2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重建initramfs-image"><span class="nav-number">2.8.</span> <span class="nav-text">重建initramfs image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置启动方式为文本模式"><span class="nav-number">2.9.</span> <span class="nav-text">设置启动方式为文本模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看nouveau是否被禁用"><span class="nav-number">2.10.</span> <span class="nav-text">查看nouveau是否被禁用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装nvidia驱动"><span class="nav-number">2.11.</span> <span class="nav-text">安装nvidia驱动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bumblebee的安装及配置"><span class="nav-number">3.</span> <span class="nav-text">Bumblebee的安装及配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bumblebee的安装"><span class="nav-number">3.1.</span> <span class="nav-text">Bumblebee的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加用户到Bumblebee的组"><span class="nav-number">3.2.</span> <span class="nav-text">添加用户到Bumblebee的组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Bumblebee-及-将控制面板加入用户菜单"><span class="nav-number">3.3.</span> <span class="nav-text">配置Bumblebee 及 将控制面板加入用户菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切回图形模式默认启动"><span class="nav-number">3.4.</span> <span class="nav-text">切回图形模式默认启动</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wuhuarou</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://wuhuarou.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://infonook.org/centos-bumblebee-nvidia/';
+          this.page.identifier = 'centos-bumblebee-nvidia/';
+          this.page.title = 'CentOS 7(1708) Intel+Nvidia双显卡笔记本安装Nvidia驱动并用Bumblebee控制独显';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wuhuarou.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
